@@ -312,7 +312,7 @@ if __name__ == "__main__":
         tamaños_arreglo.append(len(arreglo_prueba[b*10:]))
 
     print("\nLlamadas realizadas en cada ejecución de búsqueda binaria:")
-    print(llamadas_busqueda)
+    print(maximas_llamadas_busqueda)
     print("\nLlamadas realizadas en cada ejecución de Fibonacci sin memoria dinámica:")
     print(llamadas_fib)
     print("\nLlamadas realizadas en cada ejecución de Fibonacci con memoria dinámica:")
