@@ -2,6 +2,9 @@ from __future__ import annotations
 
 from typing import Any
 
+import matplotlib.pyplot as plt
+
+from random import randint
 
 Nodo = dict[str, Any]
 
@@ -250,7 +253,7 @@ def ejecutar_fibonacci(n: int) -> None:
     print("\nResumen:")
     print(f"Resultado: {resultado_memo}")
     print(f"Total de llamadas: {total_llamadas_memo}")
-
+    return total_llamadas, total_llamadas_memo
 
 def ejecutar_busqueda(arreglo: list[int], objetivo: int) -> None:
     """
@@ -280,13 +283,55 @@ def ejecutar_busqueda(arreglo: list[int], objetivo: int) -> None:
     print("\nResumen:")
     print(f"Indice encontrado: {resultado}")
     print(f"Total de llamadas: {total_llamadas}")
+    return total_llamadas
 
 
 if __name__ == "__main__":
-    ejecutar_fibonacci(6)
+    llamadas_fib = []
+    llamadas_fib_memo = []
+    llamadas_busqueda = []
+    fibos_calculados = []
+    tamaños_arreglo = []
+    maximas_llamadas_busqueda = []
+    arreglo_prueba = [v for v in range(1, 2000)]
+    for i in range(30):
+        fibo_a_calcular = i/2
+        fib,fib_memo = ejecutar_fibonacci(fibo_a_calcular)
+        llamadas_fib.append(fib)
+        llamadas_fib_memo.append(fib_memo)
+        fibos_calculados.append(fibo_a_calcular)
+        print("\n" + "#" * 70 + "\n")
 
-    print("\n" + "#" * 70 + "\n")
+        
+    for b in range (200):
+        for c in range(15):
+            objetivo_prueba = randint(b*10, 2000)
+            llamadas_busqueda.append(ejecutar_busqueda(arreglo_prueba[b*10:], objetivo_prueba))
+        maximas_llamadas_busqueda.append(max(llamadas_busqueda))
+        llamadas_busqueda.clear()
+        tamaños_arreglo.append(len(arreglo_prueba[b*10:]))
 
-    arreglo_prueba = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
-    objetivo_prueba = 6
-    ejecutar_busqueda(arreglo_prueba, objetivo_prueba)
+    print("\nLlamadas realizadas en cada ejecución de búsqueda binaria:")
+    print(llamadas_busqueda)
+    print("\nLlamadas realizadas en cada ejecución de Fibonacci sin memoria dinámica:")
+    print(llamadas_fib)
+    print("\nLlamadas realizadas en cada ejecución de Fibonacci con memoria dinámica:")
+    print(llamadas_fib_memo)
+
+    plt.scatter(fibos_calculados, llamadas_fib)
+    plt.xlabel("n")
+    plt.ylabel("Llamadas")
+    plt.title("Fibo sin memoria")
+    plt.show()
+
+    plt.scatter(fibos_calculados, llamadas_fib_memo)
+    plt.xlabel("n")
+    plt.ylabel("Llamadas")
+    plt.title("Fibo con memoria")
+    plt.show()
+
+    plt.scatter(tamaños_arreglo, maximas_llamadas_busqueda)
+    plt.xlabel("Tamaño del arreglo")
+    plt.ylabel("Llamadas maximas")
+    plt.title("Busqueda binaria")
+    plt.show()
