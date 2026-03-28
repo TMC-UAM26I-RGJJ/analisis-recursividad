@@ -135,8 +135,10 @@ def factorial_arbol(n: int) -> tuple[int, Nodo, int]:
 ## Requisitos
 
 - Python 3.10+
-
-Sin dependencias externas.
+- biblioteca Matplotlib
+```
+pip install matplotlib
+```
 
 ## Contexto Académico
 
